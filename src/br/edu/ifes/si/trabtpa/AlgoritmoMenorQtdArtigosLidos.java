@@ -32,7 +32,7 @@ package br.edu.ifes.si.trabtpa;
  * <a href="http://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  */
-public class AlgoritmoBFSDigrafo {
+public class AlgoritmoMenorQtdArtigosLidos {
 
     private static final int INFINITY = Integer.MAX_VALUE;
     private boolean[] marcado;    // marcado[v1] = existe um caminho do vértice origem vo->v1?
@@ -44,7 +44,7 @@ public class AlgoritmoBFSDigrafo {
      * @param G o dígrafo
      * @param vo o vértice origem
      */
-    public AlgoritmoBFSDigrafo(Digrafo G, int vo) {
+    public AlgoritmoMenorQtdArtigosLidos(Digrafo G, int vo) {
         marcado = new boolean[G.V()];
         distanciaPara = new int[G.V()];
         arestaPara = new int[G.V()];
@@ -67,7 +67,7 @@ public class AlgoritmoBFSDigrafo {
         while (!f.isEmpty()) {
             int v = f.desenfileira();
             for (Aresta a : G.adj(v)) {
-                int x = a.getV2();
+                int x = a.getV2().getArtigo();
                 if (!marcado[x]) {
                     arestaPara[x] = v;
                     distanciaPara[x] = distanciaPara[v] + 1;
@@ -122,7 +122,7 @@ public class AlgoritmoBFSDigrafo {
         Digrafo G = new Digrafo(in);
 
         int vo = Integer.parseInt(args[1]);
-        AlgoritmoBFSDigrafo algoritmoBFS = new AlgoritmoBFSDigrafo(G, vo);
+        AlgoritmoMenorQtdArtigosLidos algoritmoBFS = new AlgoritmoMenorQtdArtigosLidos(G, vo);
 
         for (int v = 0; v < G.V(); v++) {
             if (algoritmoBFS.temCaminhoPara(v)) {

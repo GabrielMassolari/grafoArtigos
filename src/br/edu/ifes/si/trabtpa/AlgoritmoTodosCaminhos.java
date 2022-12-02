@@ -46,7 +46,7 @@ package br.edu.ifes.si.trabtpa;
  * <a href="http://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  */
-public class AlgoritmoDFSDigrafo {
+public class AlgoritmoTodosCaminhos {
     private boolean[] marcado;    // marcado[v1] = existe um caminho do vértice origem vo->v1?
     private int[] arestaPara;     // arestaPara[v1] = última aresta no menor caminho vértice origem vo->v1
     private final int vo;         // vo é o vértice de origem
@@ -56,7 +56,7 @@ public class AlgoritmoDFSDigrafo {
      * @param G o dígrafo
      * @param vo o vértice de origem
      */
-    public AlgoritmoDFSDigrafo(Digrafo G, int vo) {
+    public AlgoritmoTodosCaminhos(Digrafo G, int vo) {
         this.vo = vo;
         arestaPara = new int[G.V()];
         marcado = new boolean[G.V()];
@@ -71,7 +71,7 @@ public class AlgoritmoDFSDigrafo {
     private void dfs(Digrafo G, int v) { 
         marcado[v] = true;
         for (Aresta a : G.adj(v)) {
-            int x = a.getV2();
+            int x = a.getV2().getArtigo();
             if (!marcado[x]) {
                 arestaPara[x] = v;
                 dfs(G, x);
@@ -111,7 +111,7 @@ public class AlgoritmoDFSDigrafo {
         Digrafo G = new Digrafo(in);
 
         int vo = Integer.parseInt(args[1]);
-        AlgoritmoDFSDigrafo algoritmoDFS = new AlgoritmoDFSDigrafo(G, vo);
+        AlgoritmoTodosCaminhos algoritmoDFS = new AlgoritmoTodosCaminhos(G, vo);
 
         for (int v = 0; v < G.V(); v++) {
             if (algoritmoDFS.temCaminhoPara(v)) {

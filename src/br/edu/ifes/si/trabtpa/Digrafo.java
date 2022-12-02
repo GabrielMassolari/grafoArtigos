@@ -42,6 +42,7 @@ public class Digrafo {
     private final int V;         // número de vértices no dígrafo
     private int A;               // número de arestas no dígrafo
     private List<Aresta>[] adj;  // adj[v1] = lista de adjacência do vértice v1
+    private List<Vertice> vert = new ArrayList<Vertice>();
     
     /**
      * Inicializa um dígrafo com V vertices e 0 arestas.
@@ -70,13 +71,29 @@ public class Digrafo {
         this(in.readInt());
         int A = in.readInt();
         if (A < 0) throw new IllegalArgumentException("Número de arestas deve ser não negativo");
-        for (int i = 0; i < A; i++) {
-            int v1 = in.readInt();
-            int v2 = in.readInt();
-            if (v1 < 0 || v1 >= V) throw new IndexOutOfBoundsException("vértice " + v1 + " não está entre 0 e " + (V-1));
-            if (v2 < 0 || v2 >= V) throw new IndexOutOfBoundsException("vértice " + v2 + " não está entre 0 e " + (V-1));
-            addAresta(new Aresta(v1, v2, 0));//Peso igual a zero para aresta (dígrafo não ponderado)
+        // Lendo os vertices
+        for (int i = 0; i < V; i++) {
+            int artigo = in.readInt();
+            int autor = in.readInt();
+            if (artigo < 0 || artigo >= V) throw new IndexOutOfBoundsException("vértice " + artigo + " não está entre 0 e " + (V-1));
+            if(vert.size() == artigo){
+                vert.add(new Vertice(artigo, autor));
+            }else{
+                throw new IndexOutOfBoundsException("Artigo " + artigo + " não está na ordem");
+            }
         }
+        //Lendo as Arestas
+        for (int i = 0; i < A; i++) {
+            int i_v1 = in.readInt();
+            int i_v2 = in.readInt();
+            if (i_v1 < 0 || i_v1 >= V) throw new IndexOutOfBoundsException("vértice " + i_v1 + " não está entre 0 e " + (V-1));
+            if (i_v2 < 0 || i_v2 >= V) throw new IndexOutOfBoundsException("vértice " + i_v2 + " não está entre 0 e " + (V-1));
+            Vertice v1 = vert.get(i_v1);
+            Vertice v2 = vert.get(i_v2);
+            addAresta(new Aresta(v1, v2));
+        }
+        
+        
     }
 
     /**
@@ -110,8 +127,8 @@ public class Digrafo {
      * @throws IndexOutOfBoundsException caso extremidades não estejam entre 0 e V-1
      */
     public void addAresta(Aresta a) {
-        int v1 = a.getV1();
-        int v2 = a.getV2();
+        int v1 = a.getV1().getArtigo();
+        int v2 = a.getV2().getArtigo();
         validaVertice(v1);
         validaVertice(v2);
         adj[v1].add(a);
