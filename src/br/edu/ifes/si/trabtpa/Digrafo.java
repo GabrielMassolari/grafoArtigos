@@ -43,6 +43,7 @@ public class Digrafo {
     private int A;               // número de arestas no dígrafo
     private List<Aresta>[] adj;  // adj[v1] = lista de adjacência do vértice v1
     private List<Vertice> vert = new ArrayList<Vertice>();
+    private List<Integer> autores = new ArrayList<Integer>();
     
     /**
      * Inicializa um dígrafo com V vertices e 0 arestas.
@@ -78,6 +79,7 @@ public class Digrafo {
             if (artigo < 0 || artigo >= V) throw new IndexOutOfBoundsException("vértice " + artigo + " não está entre 0 e " + (V-1));
             if(vert.size() == artigo){
                 vert.add(new Vertice(artigo, autor));
+                inserirAutorLista(autor);
             }else{
                 throw new IndexOutOfBoundsException("Artigo " + artigo + " não está na ordem");
             }
@@ -94,6 +96,12 @@ public class Digrafo {
         }
         
         
+    }
+    
+    private void inserirAutorLista(Integer autor){
+        if(!autores.contains(autor)){
+            autores.add(autor);
+        }
     }
 
     /**
@@ -145,6 +153,10 @@ public class Digrafo {
     public List<Aresta> adj(int v) {
         validaVertice(v);
         return adj[v];
+    }
+    
+    public List<Integer> autores(){
+        return autores;
     }
 
 

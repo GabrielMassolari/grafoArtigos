@@ -47,87 +47,59 @@ package br.edu.ifes.si.trabtpa;
  * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  */
 public class AlgoritmoTodosCaminhos {
-    private boolean[] marcado;    // marcado[v1] = existe um caminho do vértice origem vo->v1?
-    private int[] arestaPara;     // arestaPara[v1] = última aresta no menor caminho vértice origem vo->v1
-    private final int vo;         // vo é o vértice de origem
+     private boolean[] noCaminho;        // vértices no caminho atual
+    private Pilha<Integer> caminho;     // o caminho atual
+    private int numeroDeCaminhos;       // número de caminhos simples
 
-    /**
-     * Calcula um caminho dirigido de um vértice de origem vo para todos os outros vértices do dígrafo
-     * @param G o dígrafo
-     * @param vo o vértice de origem
-     */
-    public AlgoritmoTodosCaminhos(Digrafo G, int vo) {
-        this.vo = vo;
-        arestaPara = new int[G.V()];
-        marcado = new boolean[G.V()];
-        dfs(G, vo);
+    // mostra todos os caminhos simples de vo (vértice origem) para vd (vértice destino) - usando DFS
+    public AlgoritmoTodosCaminhos(Digrafo G, int vo, int vd) {
+        noCaminho = new boolean[G.V()];
+        caminho   = new Pilha<Integer>();
+        dfs(G, vo, vd);
     }
 
-    /**
-     * Método algoritmoDFS para um vértice origem
-     * @param G o dígrafo
-     * @param vo o vértice origem
-     */
-    private void dfs(Digrafo G, int v) { 
-        marcado[v] = true;
-        for (Aresta a : G.adj(v)) {
-            int x = a.getV2().getArtigo();
-            if (!marcado[x]) {
-                arestaPara[x] = v;
-                dfs(G, x);
+    // usando a ideia de exploração do método DFS
+    private void dfs(Digrafo G, int v, int vd) {
+
+        // adiciona v ao caminho atual
+        caminho.empilha(v);
+        noCaminho[v] = true;
+
+        // encontrado caminho de v para vd (vértice destino)
+        if (v == vd) {
+            imprimeCaminhoAtual();
+            numeroDeCaminhos++;
+        }
+
+        // considerar todos os vizinhos que continuariam o caminho
+        else {
+            for (Aresta a : G.adj(v)) {
+                int x = a.getV2().getArtigo();
+                if (!noCaminho[x])
+                    dfs(G, x, vd);
             }
         }
+
+        // feita a exploração de v, então o remove do caminho
+        caminho.desempilha();
+        noCaminho[v] = false;
     }
 
-    /**
-     * Existe um caminho direcionado do vértice atual para o vértice v
-     * @param v the vertex
-     * @return verdadeiro se existir um caminho direcionado, ou falso, caso contrário
-     */
-    public boolean temCaminhoPara(int v) {
-        return marcado[v];
+    // esta implementação simplesmente imprime o caminho
+    private void imprimeCaminhoAtual() {
+        Pilha<Integer> pilhaInvertida = new Pilha<Integer>();
+        for (int v : caminho)
+            pilhaInvertida.empilha(v);
+        if (pilhaInvertida.tamanho() >= 1)
+            System.out.print(pilhaInvertida.desempilha());
+        while (!pilhaInvertida.isEmpty())
+            System.out.print("-" + pilhaInvertida.desempilha());
+        System.out.println();
     }
 
-    
-    /**
-     * Retorna um caminho do vértice origem para o vértice v ou null se não existir caminho
-     * @param v o vértice
-     * @return a sequência de vértices no menor caminho, como iterable
-     */
-    public Iterable<Integer> caminhoPara(int v) {
-        if (!temCaminhoPara(v)) return null;
-        Pilha<Integer> caminho = new Pilha<Integer>();
-        for (int x = v; x != vo; x = arestaPara[x])
-            caminho.empilha(x);
-        caminho.empilha(vo);
-        return caminho;
-    }
-
-    /**
-     * Testa a classe AlgoritmoDFSDigrafo
-     */
-    public static void main(String[] args) {
-        In in = new In(args[0]);
-        Digrafo G = new Digrafo(in);
-
-        int vo = Integer.parseInt(args[1]);
-        AlgoritmoTodosCaminhos algoritmoDFS = new AlgoritmoTodosCaminhos(G, vo);
-
-        for (int v = 0; v < G.V(); v++) {
-            if (algoritmoDFS.temCaminhoPara(v)) {
-                System.out.printf("%d para %d:  ", vo, v);
-                for (int x : algoritmoDFS.caminhoPara(v)) {
-                    if (x == vo) System.out.print(x);
-                    else        System.out.print("-" + x);
-                }
-                System.out.println();
-            }
-
-            else {
-                System.out.printf("%d para %d:  não conectado\n", vo, v);
-            }
-
-        }
+    // retorna o número de caminhos simples entre vo (vértice origem) e vd (vértice destino)
+    public int numeroDeCaminhos() {
+        return numeroDeCaminhos;
     }
 
 }
