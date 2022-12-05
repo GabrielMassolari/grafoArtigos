@@ -1,50 +1,8 @@
-/******************************************************************************
- *  Compilation:  javac Stack.java
- *  Execution:    java Stack < input.txt
- *  Dependencies: StdIn.java StdOut.java
- *
- *  A generic stack, implemented using a singly-linked list.
- *  Each stack element is of type Item.
- *
- *  This version uses a static nested class Node (to save 8 bytes per
- *  Node), whereas the version in the textbook uses a non-static nested
- *  class (for simplicity).
- *  
- *  % more tobe.txt 
- *  to be or not to - be - - that - - - is
- *
- *  % java Stack < tobe.txt
- *  to be not that or be (2 left on stack)
- *
- ******************************************************************************/
-
 package br.edu.ifes.si.trabtpa;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
-/**
- *  The <tt>Pilha</tt> class represents a last-in-primeiro-out (LIFO) stack of generic items.
- *  It supports the usual <em>empilha</em> and <em>desempilha</em> operations, along with methods
- *  for peeking at the top item, testing if the stack is empty, and iterating through
- *  the items in LIFO order.
- *  <p>
- *  This implementation uses a singly-linked list with a static nested class for
- *  linked-list nodes. See {@link LinkedStack} for the version from the
- *  textbook that uses a non-static nested class.
- *  The <em>empilha</em>, <em>desempilha</em>, <em>primeiro</em>, <em>tamanho</em>, and <em>is-empty</em>
- *  operations all take constant time in the worst case.
- *  <p>
- *  For additional documentation,
- *  see <a href="http://algs4.cs.princeton.edu/13stacks">Section 1.3</a> of
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
- *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
- *
- *  @param <Item> the generic type of an item in this stack
- */
 public class Pilha<Item> implements Iterable<Item> {
     private Node<Item> primeiro;     // top of stack
     private int n;                // tamanho of the stack

@@ -1,7 +1,10 @@
 package br.edu.ifes.si.trabtpa;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -17,7 +20,9 @@ public class Main {
     
     private static void menuAplicacao(Scanner scanner, Digrafo G){
         int opcao = 0;
+        boolean saindo = false;
         do{
+            limparTela();
             System.out.println("-- Grafo Artigos Cientificos ---\n");
             System.out.println("1 - Menor caminho entre dois artigos");
             System.out.println("2 - Todos os caminhos entre dois artigos");
@@ -40,9 +45,15 @@ public class Main {
                     citacoesPorAutor(G);
                     break;
                 case 5:
+                    System.out.println("Saindo do sistema...");
+                    saindo = true;
                     break;
                 default:
+                    System.out.println("Escolha uma opcao valida!");
                     break;
+            }
+            if(!saindo){
+                pressioneEnterParaContinuar(scanner);
             }
         }while(opcao != 5);
     }
@@ -51,13 +62,13 @@ public class Main {
         int origem;
         int destino;
         System.out.println("-- Menor Caminho entre Artigos ---\n");
-        System.out.println("Vertice de Origem: ");
+        System.out.print("Vertice de Origem: ");
         origem = scanner.nextInt();
-        System.out.println("Vertice de Destino: ");
+        System.out.print("Vertice de Destino: ");
         destino = scanner.nextInt();
         
         AlgoritmoMenorQtdArtigosLidos menorCaminho = new AlgoritmoMenorQtdArtigosLidos(G, origem);
-        if (menorCaminho.temCaminhoPara(origem)) {
+        if (menorCaminho.temCaminhoPara(destino)) {
             System.out.printf("%d para %d (%d):  ", origem, destino, menorCaminho.distanciaPara(destino));
             for (int x : menorCaminho.caminhoPara(destino)) {
                 if (x == origem) {
@@ -76,9 +87,9 @@ public class Main {
         int origem;
         int destino;
         System.out.println("-- Todos os Caminhos entre Artigos ---\n");
-        System.out.println("Vertice de Origem: ");
+        System.out.print("Vertice de Origem: ");
         origem = scanner.nextInt();
-        System.out.println("Vertice de Destino: ");
+        System.out.print("Vertice de Destino: ");
         destino = scanner.nextInt();
         
         AlgoritmoTodosCaminhos todosCaminhos1 = new AlgoritmoTodosCaminhos(G, origem, destino);
@@ -106,7 +117,19 @@ public class Main {
         });
     }
     
+    private static void limparTela(){
+       System.out.print("\033[H\033[2J");
+       System.out.flush();
+    }
     
-    
-    
+    private static void pressioneEnterParaContinuar(Scanner scanner){ 
+        System.out.println("\nPressione 'ENTER' para continuaar...");
+        try{
+            System.in.read();
+            scanner.nextLine();
+        }  
+        catch(Exception e){
+            
+        } 
+    }
 }

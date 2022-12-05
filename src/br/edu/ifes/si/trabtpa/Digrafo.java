@@ -1,41 +1,8 @@
-/*******************************************************************************
- *  Compilação:        javac Digrafo.java
- *  Execução:          java Digrafo dados.txt
- *  Dependências:      Aresta.java
- *  Arquivos de dados: Digrafo1.txt
- *  Link dos dados:    https://drive.google.com/open?id=0B3q56TwNCeXoc2tlbllCRmo1MTQ
- *
- *  Um dígrafo implementado utilizando listas de adjacências.
- *
- *  % java Digrafo Digrafo1.txt
- *  13 22
- *  0: 1  5  
- *  1: 
- *  2: 3  0  
- *  3: 2  5  
- *  4: 2  3  
- *  5: 4  
- *  6: 0  8  4  9  
- *  7: 9  6  
- *  8: 6  
- *  9: 10  11  
- *  10: 12  
- *  11: 12  4  
- *  12: 9  
- *
- ******************************************************************************/
-
 package br.edu.ifes.si.trabtpa;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Esta classe implementa a representação do dígrafo com lista de adjacências.
- * Para documentação adicional, acesse:
- * <a href="http://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
- * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
- */
 public class Digrafo {
     private static final String NEWLINE = System.getProperty("line.separator");
 

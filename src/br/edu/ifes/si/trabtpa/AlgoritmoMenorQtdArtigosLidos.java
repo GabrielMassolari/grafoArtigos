@@ -1,37 +1,5 @@
-/*******************************************************************************
- *  Compilação:        javac AlgoritmoBFSDigrafo.java
- *  Execução:          java AlgoritmoBFSDigrafo dados.txt vo
- *  Dependências:      Digrafo.java Fila.java Pilha.java
- *  Arquivos de dados: Digrafo1.txt
- *  Link dos dados:    https://drive.google.com/open?id=0B3q56TwNCeXoc2tlbllCRmo1MTQ
- *
- *  Executa pesquisa em largura em um dígrafo.
- *
- *  % java AlgoritmoBFSDigrafo Digrafo1.txt 3
- *  3 para 0 (2):  3->2->0
- *  3 para 1 (3):  3->2->0->1
- *  3 para 2 (1):  3->2
- *  3 para 3 (0):  3
- *  3 para 4 (2):  3->5->4
- *  3 para 5 (1):  3->5
- *  3 para 6 (-):  não conectado
- *  3 para 7 (-):  não conectado
- *  3 para 8 (-):  não conectado
- *  3 para 9 (-):  não conectado
- *  3 para 10 (-):  não conectado
- *  3 para 11 (-):  não conectado
- *  3 para 12 (-):  não conectado
- *
- ******************************************************************************/
-
 package br.edu.ifes.si.trabtpa;
 
-/**
- * Esta classe implementa o algoritmo de busca em largura em um dígrafo.
- * Para documentação adicional, acesse:
- * <a href="http://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
- * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
- */
 public class AlgoritmoMenorQtdArtigosLidos {
 
     private static final int INFINITY = Integer.MAX_VALUE;
@@ -113,33 +81,4 @@ public class AlgoritmoMenorQtdArtigosLidos {
         caminho.empilha(x);
         return caminho;
     }
-
-    /**
-     * Testa a classe AlgoritmoBFSDigrafo.
-     */
-    public static void main(String[] args) {
-        In in = new In(args[0]);
-        Digrafo G = new Digrafo(in);
-
-        int vo = Integer.parseInt(args[1]);
-        AlgoritmoMenorQtdArtigosLidos algoritmoBFS = new AlgoritmoMenorQtdArtigosLidos(G, vo);
-
-        for (int v = 0; v < G.V(); v++) {
-            if (algoritmoBFS.temCaminhoPara(v)) {
-                System.out.printf("%d para %d (%d):  ", vo, v, algoritmoBFS.distanciaPara(v));
-                for (int x : algoritmoBFS.caminhoPara(v)) {
-                    if (x == vo) {
-                        System.out.print(x);
-                    } else {
-                        System.out.print("->" + x);
-                    }
-                }
-                System.out.println();
-            } else {
-                System.out.printf("%d para %d (-):  não conectado\n", vo, v);
-            }
-
-        }
-    }
-
 }
