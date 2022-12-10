@@ -123,7 +123,7 @@ public class Main {
     }
     
     private static void pressioneEnterParaContinuar(Scanner scanner){ 
-        System.out.println("\nPressione 'ENTER' para continuaar...");
+        System.out.println("\nPressione 'ENTER' para continuar...");
         try{
             System.in.read();
             scanner.nextLine();
