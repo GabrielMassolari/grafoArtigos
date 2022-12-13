@@ -27,7 +27,7 @@ public class Main {
             System.out.println("1 - Menor caminho entre dois artigos");
             System.out.println("2 - Todos os caminhos entre dois artigos");
             System.out.println("3 - Número de citações de cada artigo");
-            System.out.println("4 - Número de citações de cada auto");
+            System.out.println("4 - Número de citações de cada autor");
             System.out.println("5 - SAIR");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
